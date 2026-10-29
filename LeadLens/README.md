@@ -1,3 +1,8 @@
+
+29 OCT 2026
+added argument and parser such that we can call the claude client from CLI where config will help with creating client and leadlens have main() class takes inout send to client and get back the data.
+Claude is returning block (faced this error AttributeError: 'ThinkingBlock' object has no attribute 'text') then added all the text from message context.
+
 Functional requirements
 
 A CLI command leadlens ask "<question>" sends the question to the model and prints the answer.

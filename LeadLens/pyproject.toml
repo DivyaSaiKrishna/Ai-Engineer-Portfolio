@@ -12,7 +12,7 @@ dependencies = [
 ]
 
 [project.scripts]
-leadlens = "leadlens.cli:main"
+leadlens = "leadlens.LeadLensCLI:main"
 
 [dependency-groups]
 dev = [
