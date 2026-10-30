@@ -1,3 +1,6 @@
+30 OCT 2026
+Added stream option by adding argument stream , if user leadlens ask "Explain RAG in detail" --stream, output will be streamed as it get response from LLM.
+
 
 29 OCT 2026
 added argument and parser such that we can call the claude client from CLI where config will help with creating client and leadlens have main() class takes inout send to client and get back the data.
