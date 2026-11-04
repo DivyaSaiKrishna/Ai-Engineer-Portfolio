@@ -2,6 +2,9 @@ import argparse
 
 from leadlens.LeadLensConfig import leadlensconfig
 
+class StructuredOutputError(Exception):
+    pass
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="leadlens")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -11,12 +14,29 @@ def main() -> None:
     ask.add_argument("--model", default="claude-haiku-5-5")
     ask.add_argument("--max-tokens", type=int, default=1024)
     ask.add_argument("--stream", action="store_true")
+    ask.add_argument("--json", action="store_true")
+    ask.add_argument("--prof", action="store_true")
 
     args = parser.parse_args()
 
     if args.command == "ask":
-        client = leadlensconfig(model=args.model, max_tokens=args.max_tokens)
-        if args.stream:
+        try:
+            client = leadlensconfig(model=args.model, max_tokens=args.max_tokens)
+        except ValueError as e:
+            parser.error(str(e))
+        if args.prof:
+            try:
+                print(client.ask_prof(args.question).model_dump_json(indent=2))
+            except StructuredOutputError as e:
+                print(f"Error: {e}")
+                raise SystemExit(1)
+        elif args.json:
+            try:
+                print(client.ask_json(args.question).model_dump_json(indent=2))
+            except StructuredOutputError as e:
+                print(f"Error: {e}")
+                raise SystemExit(1)
+        elif args.stream:
             for chunk in client.ask_stream(args.question):
                 print(chunk, end="", flush=True)
             print()

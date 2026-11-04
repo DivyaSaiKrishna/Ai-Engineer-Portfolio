@@ -1,3 +1,39 @@
+4 Nov 2026
+for system prompts we saving in seperate class to get reply in formated 
+schemas where the structure is saved
+
+in configuration we call client set question, config prompt, wrap in json and return it
+
+
+When we ask professor
+ LeadLens % leadlens ask "What is RAG?" --max-tokens 4000 --prof
+
+{
+  "answer": "RAG stands for Retrieval-Augmented Generation. It is a technique that improves how large language models (AI systems that generate text) answer questions. Instead of relying only on what the model learned during training, a RAG system first searches an external collection of documents (such as company manuals, research papers, or a database) for information relevant to the user's question. It then gives those retrieved passages to the language model along with the question, so the model can write an answer grounded in that specific material. In everyday terms, it is like an open-book exam: the AI looks up the right pages before answering, rather than answering purely from memory. This helps reduce made-up answers (hallucinations), keeps responses up to date without retraining the model, and allows answers to cite their sources. A typical RAG pipeline has three steps: indexing (splitting documents into chunks and converting them into numerical vectors that capture meaning), retrieval (finding the chunks most similar to the question), and generation (the language model writes the final answer using those chunks).",
+  "confidence": "high",
+  "assumptions": [
+    "The question refers to Retrieval-Augmented Generation in the context of AI and language models, the most common meaning of the acronym."
+  ],
+  "needs_external_data": false
+}
+
+[stop_reason=end_turn usage=Usage(cache_creation=CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0), cache_creation_input_tokens=0, cache_read_input_tokens=0, inference_geo='global', input_tokens=363, output_tokens=388, output_tokens_details=OutputTokensDetails(thinking_tokens=0), server_tool_use=None, service_tier='standard', speed='standard')]
+
+When we ask research assistant
+ LeadLens % leadlens ask "What is RAG?" --max-tokens 4000 --json
+
+{
+  "answer": "RAG (Retrieval-Augmented Generation) is an AI architecture that improves the output of a large language model by first retrieving relevant information from an external knowledge source (such as a document collection, database, or search index) and then supplying that information to the model as context when it generates a response. This grounds answers in up-to-date or domain-specific data, reduces hallucinations, and allows citations to sources, without needing to retrain the model.",
+  "confidence": "high",
+  "assumptions": [
+    "The question refers to Retrieval-Augmented Generation in the context of AI/NLP, not another acronym meaning."
+  ],
+  "needs_external_data": false
+}
+
+[stop_reason=end_turn usage=Usage(cache_creation=CacheCreation(ephemeral_1h_input_tokens=0, ephemeral_5m_input_tokens=0), cache_creation_input_tokens=0, cache_read_input_tokens=0, inference_geo='global', input_tokens=331, output_tokens=208, output_tokens_details=OutputTokensDetails(thinking_tokens=0), server_tool_use=None, service_tier='standard', speed='standard')]
+
+
 30 OCT 2026
 Added stream option by adding argument stream , if user leadlens ask "Explain RAG in detail" --stream, output will be streamed as it get response from LLM.
 
